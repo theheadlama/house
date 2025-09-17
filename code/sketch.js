@@ -13,22 +13,18 @@
     const maxPupilOffsetUp = 60;
     const maxPupilOffsetDown = 40; // Example of a different constraint
 
-    // The percentage to overshoot the target. 1.2 means 20% farther.
+    // The percentage to overshoot the target for animation fx. 1.2 means 20% farther.
     const overshootAmount = 1.2;
 
-    /**
-     * The setup function runs once when the program starts.
-     * It's used to define initial environment properties.
-     */
+    let eyeStyles = [drawAnimeEye, drawSleepyEye, drawAngryEye, drawMonsterEye, drawCuteEye, drawRobotEye, drawSurprisedEye, basicEye, drawEyeClassicCartoon,drawEyeAnime,drawEyeGoogly,drawEyeSimpleDot,drawEyeLashes]; // Array of eye drawing functions
+    let drawEye = basicEye; // Default eye drawing function
+
     function setup() {
         // Create a canvas with an 800x600 resolution.
         createCanvas(800, 600);
+        
     }
 
-    /**
-     * The draw function is called continuously and is where the main
-     * drawing and animation logic happens.
-     */
     function draw() {
         // Set a light background color.
         background(245, 230, 230);
@@ -58,7 +54,7 @@
      * @param {number} offsetX - The current horizontal offset for the iris and pupil.
      * @param {number} offsetY - The current vertical offset for the iris and pupil.
      */
-    function drawEye(x, y, offsetX, offsetY) {
+    function basicEye(x, y, offsetX, offsetY) {
         // --- 1. Draw the sclera (the white background of the eye) ---
         // We create a filled shape that matches the outline of the eye.
         push();
@@ -142,4 +138,11 @@
             // We don't need to set the intermediate targets here,
             // the lerp in draw() will handle the smooth return.
         }
+    }
+
+    function mousePressed() {
+        // Cycle through eye styles
+        let currentIndex = eyeStyles.indexOf(drawEye);
+        let nextIndex = (currentIndex + 1) % eyeStyles.length;
+        drawEye = eyeStyles[nextIndex];
     }
